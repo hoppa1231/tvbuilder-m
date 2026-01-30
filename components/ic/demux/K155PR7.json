@@ -1,0 +1,137 @@
+{
+	"name":"К155ПР7",
+	"num_pins": 16,
+	"height": 25,
+	"width": 25,
+	"textures": [
+		{
+			"name":"LEGACY", 
+			"path":"res://graphics/legacy/ic/16leg_2x.png"
+		},
+		{
+			"name":"DEFAULT", 
+			"path":"res://components/ic/ic.png"
+		}
+		],
+	"pinSpecifications": [
+		{
+			"index": 1,
+			"direction": "DIRECTION_OUTPUT",
+			"position": "BOTTOM",
+			"readable_name": "Q0",
+			"description": "Выход Q0",
+			"dependencies": [-1]
+		},{
+			"index": 2,
+			"direction": "DIRECTION_OUTPUT",
+			"position": "BOTTOM",
+			"readable_name": "Q1",
+			"description": "Выход Q1",
+			"dependencies": [-1]
+		},{
+			"index": 3,
+			"direction": "DIRECTION_OUTPUT",
+			"position": "BOTTOM",
+			"readable_name": "Q2",
+			"description": "Выход Q2",
+			"dependencies": [-1]
+		}
+		,{
+			"index": 4,
+			"direction": "DIRECTION_OUTPUT",
+			"position": "BOTTOM",
+			"readable_name": "Q3",
+			"description": "Выход Q3",
+			"dependencies": [-1]
+		},{
+			"index": 5,
+			"direction": "DIRECTION_OUTPUT",
+			"position": "BOTTOM",
+			"readable_name":"Q4",
+			"description": "Выход Q4",
+			"dependencies": [-1]
+		},{
+			"index": 6,
+			"direction": "DIRECTION_OUTPUT",
+			"position": "BOTTOM",
+			"readable_name": "Q5",
+			"description": "Выход Q5",
+			"dependencies": [-1]
+		}
+		,{
+			"index": 7,
+			"direction": "DIRECTION_OUTPUT",
+			"position": "BOTTOM",
+			"readable_name": "Q6",
+			"description": "Выход Q6",
+			"dependencies": []
+		}
+		,{
+			"index": 8,
+			"direction": "DIRECTION_OUTPUT",
+			"position": "BOTTOM",
+			"readable_name": "GND",
+			"description": "Земля",
+			"dependencies": []
+		},{
+			"index": 16,
+			"direction": "DIRECTION_OUTPUT",
+			"position": "TOP",
+			"readable_name": "VCC",
+			"description": "Питание 5В",
+			"dependencies": []
+		},{
+			"index": 15,
+			"direction": "DIRECTION_INPUT",
+			"position": "TOP",
+			"readable_name": "~RE",
+			"description": "Разрешающий",
+			"dependencies": []
+		},{
+			"index": 14,
+			"direction": "DIRECTION_INPUT",
+			"position": "TOP",
+			"readable_name": "A4",
+			"description": "Вход A4",
+			"dependencies": []
+		},{
+			"index": 13,
+			"direction": "DIRECTION_INPUT",
+			"position": "TOP",
+			"readable_name": "A3",
+			"description": "Вход A3",
+			"dependencies": []
+		}
+		,{
+			"index": 12,
+			"direction": "DIRECTION_INPUT",
+			"position": "TOP",
+			"readable_name": "A2",
+			"description": "Вход A2",
+			"dependencies": []
+		}
+		,{
+			"index": 11,
+			"direction": "DIRECTION_INPUT",
+			"position": "TOP",
+			"readable_name": "A1",
+			"description": "Вход A1",
+			"dependencies": []
+		}
+		,{
+			"index": 10,
+			"direction": "DIRECTION_INPUT",
+			"position": "TOP",
+			"readable_name": "A0",
+			"description": "Вход A0",
+			"dependencies": []
+		},{
+			"index": 9,
+			"direction": "DIRECTION_OUTPUT",
+			"position": "TOP",
+			"readable_name": "Q7",
+			"description": "Выход Q7",
+			"dependencies": []
+		}
+	]
+}
