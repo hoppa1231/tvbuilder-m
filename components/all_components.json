@@ -71,6 +71,14 @@
 		"config_path": "res://components/ic/demux/74485.json",
 		"logic_class_path": "res://components/ic/demux/74485.gd"
 	},
+	"74485x12": {
+		"config_path": "res://components/ic/demux/74485_x12.json",
+		"logic_class_path": "res://components/ic/demux/74485_x12.gd"
+	},
+	"К155ПР7": {
+		"config_path": "res://components/ic/demux/K155PR7.json",
+		"logic_class_path": "res://components/ic/demux/K155PR7.gd"
+	},
 	"7448": {
 		"config_path": "res://components/ic/demux/7448.json",
 		"logic_class_path": "res://components/ic/demux/7448.gd"

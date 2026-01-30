@@ -81,6 +81,16 @@
 							"ic_name": "74485",
 							"config_path": "res://components/ic/demux/74485.json",
 							"logic_class_path": "res://components/ic/demux/74485.gd"
+						},
+						{
+							"ic_name": "74485 x12",
+							"config_path": "res://components/ic/demux/74485_x12.json",
+							"logic_class_path": "res://components/ic/demux/74485_x12.gd"
+						},
+						{
+							"ic_name": "К155ПР7",
+							"config_path": "res://components/ic/demux/K155PR7.json",
+							"logic_class_path": "res://components/ic/demux/K155PR7.gd"
 						}
 					]
 				},
