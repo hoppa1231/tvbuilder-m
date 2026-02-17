@@ -276,6 +276,16 @@ func update_pins(pins:Array, ic_shape:Vector2):
 					side_margin[_pin.ic_position]*(side_count[_pin.ic_position] - side_index[_pin.ic_position]-1))
 					side_index[_pin.ic_position]+=1
 
+func rebuild_pins(new_pin_specs: Array) -> void:
+	for p in pins:
+		if is_instance_valid(p):
+			p.queue_free()
+
+	pins.clear()
+	initialize_pins(new_pin_specs, hitbox.shape.size)
+	update_pins(pins, hitbox.shape.size)
+	toggle_output_highlight()
+
 func toggle_output_highlight():
 	for pin in pins:
 		pin.toggle_output_highlight()

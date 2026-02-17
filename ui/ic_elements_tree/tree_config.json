@@ -219,6 +219,11 @@
 					"logic_class_path": "res://components/ic/other/switch_group.gd"
 				},
 				{
+					"ic_name": "Группа переключателей X",
+					"config_path": "res://components/ic/other/switch_group_x.json",
+					"logic_class_path": "res://components/ic/other/switch_group_x.gd"
+				},
+				{
 					"ic_name": "Клавиатура",
 					"config_path": "res://components/ic/other/keyboard.json",
 					"logic_class_path": "res://components/ic/other/keyboard.gd"
@@ -252,6 +257,11 @@
 					"ic_name": "Группа светодиодов",
 					"config_path": "res://components/ic/other/led_group.json",
 					"logic_class_path": "res://components/ic/other/led_group.gd"
+				},
+				{
+					"ic_name": "Группа светодиодов X",
+					"config_path": "res://components/ic/other/led_group_x.json",
+					"logic_class_path": "res://components/ic/other/led_group_x.gd"
 				},
 				{
 					"ic_name": "Матрица светодиодов",
