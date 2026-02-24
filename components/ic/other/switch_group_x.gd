@@ -30,9 +30,9 @@ var component_spec: ComponentSpecification
 var pin_template: PinSpecification
 
 # Base body size
-var base_pin_count: int = 0
-var base_body_width: float = 0.0
-var base_body_height: float = 0.0
+var base_pin_count: int = 8
+var base_body_width: float = 360.0
+var base_body_height: float = 45.0
 
 # -------------------------
 # UI
@@ -54,8 +54,11 @@ func initialize(spec: ComponentSpecification, ic = null) -> void:
 	component_spec = spec
 	pin_template = spec.pinSpecifications[0]
 
-	switch_count = spec.num_pins
-	base_pin_count = spec.num_pins
+	component_spec.num_pins = spec.details.get("size", spec.num_pins)
+	spec.details.size = component_spec.num_pins
+	spec.num_pins = spec.details.size
+	
+	switch_count = spec.details.size
 
 	# init states
 	on.resize(switch_count)
@@ -64,9 +67,9 @@ func initialize(spec: ComponentSpecification, ic = null) -> void:
 
 	super.initialize(spec, ic)
 
-	_cache_body_base_size()
 	_ensure_switch_container()
 	_rebuild_buttons()
+	_rebuild_pins_for_switch_count(switch_count)
 
 func _ready() -> void:
 	_ensure_switch_container()
@@ -200,6 +203,7 @@ func _apply_switch_count(new_count: int) -> void:
 func _rebuild_pins_for_switch_count(n: int) -> void:
 	var new_specs := _make_pin_specs(n)
 	component_spec.num_pins = n
+	component_spec.details.size = n
 	component_spec.pinSpecifications = new_specs
 	rebuild_pins(new_specs)
 
@@ -265,12 +269,6 @@ func _apply_button_layout_and_style() -> void:
 		var b = buttons[i]
 		b.position = Vector2(step * 0.5 + i * step, step * 0.5)
 
-func _cache_body_base_size() -> void:
-	if sprite == null or sprite.texture == null:
-		return
-	base_body_width = sprite.texture.get_size().x
-	base_body_height = sprite.texture.get_size().y
-
 func _update_body_size() -> void:
 	if sprite == null or sprite.texture == null or hitbox == null:
 		return
@@ -319,7 +317,6 @@ func _has_connected_wires() -> bool:
 func change_graphics_mode(mode) -> void:
 	super.change_graphics_mode(mode)
 
-	_cache_body_base_size()
 	_update_body_size()
 
 	# body + label

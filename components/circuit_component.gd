@@ -7,6 +7,7 @@ var now_disabled_drag = false
 
 var drag_offset = Vector2(0,0)
 var readable_name:String
+var details : Dictionary
 
 var display_name_label = true
 var id: int
@@ -25,6 +26,7 @@ var prev_modulate = Color(1, 1, 1)
 
 func initialize(spec: ComponentSpecification, ic = null)->void: # Ic field holds saved state and is component-specific
 	self.readable_name = spec.name
+	self.details = spec.details
 	self.input_pickable = true
 	sprite = Sprite2D.new()
 	sprite.centered = false
@@ -191,6 +193,7 @@ func to_json_object() -> Dictionary:
 	return {
 		"id": id,
 		"name": readable_name,
+		"details": details,
 		"position": position
 	}
 func pin(i:int):

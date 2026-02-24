@@ -73,6 +73,7 @@ func parse_save_str(scene: Node2D, file: String, path="LoadedProject.json"):
 		component = load(ComponentManager.ALL_COMPONENTS_LIST[ic.name].logic_class_path).new()
 		var spec = ComponentSpecification.new()
 		spec.initialize_from_json(ComponentManager.ALL_COMPONENTS_LIST[ic.name].config_path)
+		spec.set_details(ic.get("details", {}))
 		component.initialize(spec, ic)
 		ComponentManager.change_id(component, ic.id)
 		ComponentManager.last_id = max(ComponentManager.last_id, ic.id) + 1
@@ -202,6 +203,7 @@ func load_snippet(mouse_pos, scene, path = "test_snippet.json"):
 		component = load(ComponentManager.ALL_COMPONENTS_LIST[ic.name].logic_class_path).new()
 		var spec = ComponentSpecification.new()
 		spec.initialize_from_json(ComponentManager.ALL_COMPONENTS_LIST[ic.name].config_path)
+		spec.set_details(parsed.get("details", {}))
 		component.initialize(spec, ic)
 		id_map[ic.id] = ComponentManager.last_id + ic.id
 		ComponentManager.change_id(component, ComponentManager.last_id + ic.id)

@@ -38,9 +38,9 @@ var component_spec: ComponentSpecification
 var pin_template: PinSpecification
 
 # Base body size (used to scale width as count changes)
-var base_pin_count: int = 0
-var base_body_width: float = 0.0
-var base_body_height: float = 0.0
+var base_pin_count: int = 8
+var base_body_width: float = 360.0
+var base_body_height: float = 45.0
 
 # -------------------------
 # UI
@@ -61,16 +61,18 @@ func _init() -> void:
 func initialize(spec: ComponentSpecification, ic = null) -> void:
 	component_spec = spec
 	pin_template = spec.pinSpecifications[0]
+	
+	component_spec.num_pins = spec.details.get("size", spec.num_pins)
+	spec.details.size = component_spec.num_pins
+	spec.num_pins = spec.details.size
 
-	# IMPORTANT: remember original JSON pin count as our "base"
 	led_count = spec.num_pins
-	base_pin_count = spec.num_pins
 
 	super.initialize(spec, ic)
 
-	_cache_body_base_size()
 	_ensure_led_container()
 	_rebuild_leds()
+	_rebuild_pins_for_led_count(led_count)
 
 func _ready() -> void:
 	# initialize() может вызваться до _ready(), но контейнер/LED уже созданы — ок.
@@ -199,6 +201,7 @@ func _apply_led_count(new_count: int) -> void:
 func _rebuild_pins_for_led_count(n: int) -> void:
 	var new_specs := _make_pin_specs(n)
 	component_spec.num_pins = n
+	component_spec.details.size = n
 	component_spec.pinSpecifications = new_specs
 	rebuild_pins(new_specs)
 
@@ -266,12 +269,6 @@ func _apply_led_layout_and_style() -> void:
 			s.texture = texture_off
 			s.modulate = LED_OFF_MODULATE
 
-func _cache_body_base_size() -> void:
-	if sprite == null or sprite.texture == null:
-		return
-	base_body_width = sprite.texture.get_size().x
-	base_body_height = sprite.texture.get_size().y
-
 func _update_body_size() -> void:
 	if sprite == null or sprite.texture == null or hitbox == null:
 		return
@@ -337,7 +334,6 @@ func _set_led_off(i: int) -> void:
 func change_graphics_mode(mode) -> void:
 	super.change_graphics_mode(mode)
 
-	_cache_body_base_size()
 	_update_body_size()
 
 	if led_sprites.is_empty():
