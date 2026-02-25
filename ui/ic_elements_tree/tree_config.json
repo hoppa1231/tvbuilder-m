@@ -189,6 +189,16 @@
 					]
 				},
 				{
+					"group_name": "Мультиплексоры",
+					"subelements": [
+						{
+							"ic_name": "К555КП11",
+							"config_path": "res://components/ic/multiplexers/K555KP11.json",
+							"logic_class_path": "res://components/ic/multiplexers/K555KP11.gd"
+						}
+					]
+				},
+				{
 					"group_name": "Микропроцессоры",
 					"subelements": [
 						{
