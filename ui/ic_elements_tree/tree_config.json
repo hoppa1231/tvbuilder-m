@@ -192,9 +192,14 @@
 					"group_name": "Мультиплексоры",
 					"subelements": [
 						{
-							"ic_name": "К555КП11",
-							"config_path": "res://components/ic/multiplexers/K555KP11.json",
-							"logic_class_path": "res://components/ic/multiplexers/K555KP11.gd"
+							"ic_name": "К1533КП11А",
+							"config_path": "res://components/ic/multiplexers/K1533KP11A.json",
+							"logic_class_path": "res://components/ic/multiplexers/K1533KP11A.gd"
+						},
+						{
+							"ic_name": "К1533КП7",
+							"config_path": "res://components/ic/multiplexers/K1533KP7.json",
+							"logic_class_path": "res://components/ic/multiplexers/K1533KP7.gd"
 						}
 					]
 				},
@@ -227,11 +232,6 @@
 					"ic_name": "Группа переключателей",
 					"config_path": "res://components/ic/other/switch_group.json",
 					"logic_class_path": "res://components/ic/other/switch_group.gd"
-				},
-				{
-					"ic_name": "Группа переключателей X",
-					"config_path": "res://components/ic/other/switch_group_x.json",
-					"logic_class_path": "res://components/ic/other/switch_group_x.gd"
 				},
 				{
 					"ic_name": "Клавиатура",
@@ -267,11 +267,6 @@
 					"ic_name": "Группа светодиодов",
 					"config_path": "res://components/ic/other/led_group.json",
 					"logic_class_path": "res://components/ic/other/led_group.gd"
-				},
-				{
-					"ic_name": "Группа светодиодов X",
-					"config_path": "res://components/ic/other/led_group_x.json",
-					"logic_class_path": "res://components/ic/other/led_group_x.gd"
 				},
 				{
 					"ic_name": "Матрица светодиодов",

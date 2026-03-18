@@ -1,5 +1,5 @@
 extends CircuitComponent
-class_name K555KP11
+class_name K1533KP11A
 
 # ВХОД: 1A,2A,3A,4A | 1B,2B,3B,4B
 const INPUT_PINS_A: Array[int] = [2, 5, 11, 14]
