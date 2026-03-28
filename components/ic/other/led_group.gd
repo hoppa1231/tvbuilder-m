@@ -49,6 +49,7 @@ var settings_popup: Panel
 var popup_style: StyleBoxFlat
 var count_label: Label
 var text_line: LineEdit
+var popup_open_state: Dictionary = {}
 
 
 # =========================================================
@@ -138,13 +139,16 @@ func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void
 		_toggle_popup()
 
 func _toggle_popup() -> void:
-	settings_popup.global_position = get_global_mouse_position()
-	settings_popup.visible = !settings_popup.visible
-
-	if settings_popup.visible:
+	var will_open := not settings_popup.visible
+	if will_open:
+		settings_popup.global_position = get_global_mouse_position()
+		settings_popup.visible = true
+		popup_open_state = capture_history_state()
 		GlobalSettings.disableGlobalInput = true
 		_refresh_popup_lock_state()
 	else:
+		_commit_history_state_change()
+		settings_popup.visible = false
 		GlobalSettings.disableGlobalInput = false
 
 func _refresh_popup_lock_state() -> void:
@@ -156,6 +160,7 @@ func _refresh_popup_lock_state() -> void:
 		_set_popup_color_ok()
 
 func _on_text_submitted(_text: String) -> void:
+	_commit_history_state_change()
 	settings_popup.visible = false
 	GlobalSettings.disableGlobalInput = false
 	text_line.release_focus()
@@ -180,9 +185,34 @@ func _on_text_changed(new_text: String) -> void:
 	_set_popup_color_ok()
 
 func _restore_text_line() -> void:
+	if not is_instance_valid(text_line):
+		return
 	text_line.set_block_signals(true)
 	text_line.text = str(led_count)
 	text_line.set_block_signals(false)
+
+func capture_history_state() -> Dictionary:
+	return {
+		"count": led_count
+	}
+
+func apply_history_state(state: Dictionary) -> void:
+	var target_count: int = int(clamp(int(state.get("count", led_count)), MIN_LED_COUNT, MAX_LED_COUNT))
+	led_count = target_count
+	_update_count_label()
+	_rebuild_leds()
+	_rebuild_pins_for_led_count(led_count)
+	_restore_text_line()
+
+func _commit_history_state_change() -> void:
+	if popup_open_state.is_empty():
+		return
+	var new_state := capture_history_state()
+	if popup_open_state != new_state:
+		var event = ComponentStateChangeEvent.new()
+		event.initialize(self, popup_open_state, new_state)
+		HistoryBuffer.register_event(event)
+	popup_open_state = {}
 
 
 # =========================================================

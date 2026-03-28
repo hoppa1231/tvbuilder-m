@@ -42,6 +42,7 @@ var settings_popup: Panel
 var popup_style: StyleBoxFlat
 var count_label: Label
 var text_line: LineEdit
+var popup_open_state: Dictionary = {}
 
 
 # =========================================================
@@ -165,13 +166,16 @@ func _is_over_any_switch(global_mouse_pos: Vector2) -> bool:
 	return false
 
 func _toggle_popup() -> void:
-	settings_popup.global_position = get_global_mouse_position()
-	settings_popup.visible = !settings_popup.visible
-
-	if settings_popup.visible:
+	var will_open := not settings_popup.visible
+	if will_open:
+		settings_popup.global_position = get_global_mouse_position()
+		settings_popup.visible = true
+		popup_open_state = capture_history_state()
 		GlobalSettings.disableGlobalInput = true
 		_refresh_popup_lock_state()
 	else:
+		_commit_history_state_change()
+		settings_popup.visible = false
 		GlobalSettings.disableGlobalInput = false
 
 func _refresh_popup_lock_state() -> void:
@@ -183,6 +187,7 @@ func _refresh_popup_lock_state() -> void:
 		_set_popup_color_ok()
 
 func _on_text_submitted(_text: String) -> void:
+	_commit_history_state_change()
 	settings_popup.visible = false
 	GlobalSettings.disableGlobalInput = false
 	text_line.release_focus()
@@ -207,9 +212,42 @@ func _on_text_changed(new_text: String) -> void:
 	_set_popup_color_ok()
 
 func _restore_text_line() -> void:
+	if not is_instance_valid(text_line):
+		return
 	text_line.set_block_signals(true)
 	text_line.text = str(switch_count)
 	text_line.set_block_signals(false)
+
+func capture_history_state() -> Dictionary:
+	return {
+		"count": switch_count,
+		"on": on.duplicate(true)
+	}
+
+func apply_history_state(state: Dictionary) -> void:
+	var target_count: int = int(clamp(int(state.get("count", switch_count)), MIN_SWITCH_COUNT, MAX_SWITCH_COUNT))
+	var saved_on: Array = []
+	var raw_saved_on = state.get("on", [])
+	if raw_saved_on is Array:
+		saved_on = raw_saved_on
+	switch_count = target_count
+	on.resize(switch_count)
+	for i in range(switch_count):
+		on[i] = bool(saved_on[i]) if i < saved_on.size() else false
+	_update_count_label()
+	_rebuild_buttons()
+	_rebuild_pins_for_switch_count(switch_count)
+	_restore_text_line()
+
+func _commit_history_state_change() -> void:
+	if popup_open_state.is_empty():
+		return
+	var new_state := capture_history_state()
+	if popup_open_state != new_state:
+		var event = ComponentStateChangeEvent.new()
+		event.initialize(self, popup_open_state, new_state)
+		HistoryBuffer.register_event(event)
+	popup_open_state = {}
 
 
 # =========================================================

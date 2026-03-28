@@ -10,14 +10,20 @@ var pinSpecifications: Array = []
 var details: Dictionary = {}
 var content: String = ""
 
-func initialize(name:String, num_pins:int, height:float, width:float, textures:Dictionary, pinSpecifications:Array, details:Dictionary)->void:
+func initialize(name:String, num_pins:int, height:float, width:float, textures:Dictionary, pinSpecifications:Array, details:Dictionary, content:String = "")->void:
 	self.name = name
 	self.num_pins = num_pins
 	self.width = width
 	self.height = height
-	self.textures = textures
-	self.pinSpecifications = pinSpecifications
-	self.details = details
+	self.textures = textures.duplicate(true)
+	self.pinSpecifications = []
+	for pin_spec in pinSpecifications:
+		if pin_spec is PinSpecification:
+			self.pinSpecifications.append(pin_spec.copy())
+		else:
+			self.pinSpecifications.append(pin_spec)
+	self.details = details.duplicate(true)
+	self.content = content
 
 func initialize_from_json(path: String) -> void:
 	var file = FileAccess.open(path, FileAccess.READ).get_as_text()
@@ -27,8 +33,7 @@ func initialize_from_json(path: String) -> void:
 		InfoManager.write_error("Ошибка распознавания спецификации компонента: %s" % [path])
 		return
 	
-	if("content" in parsed):
-		self.content = parsed
+	self.content = parsed.get("content", "")
 	self.num_pins = parsed.num_pins
 	self.width = parsed.width
 	self.height = parsed.height
@@ -48,4 +53,9 @@ func initialize_from_json(path: String) -> void:
 		self.pinSpecifications.append(spec)
 		
 func set_details(details: Dictionary) -> void:
-	self.details = details
+	self.details = details.duplicate(true)
+
+func copy() -> ComponentSpecification:
+	var new = ComponentSpecification.new()
+	new.initialize(self.name, self.num_pins, self.height, self.width, self.textures, self.pinSpecifications, self.details, self.content)
+	return new
