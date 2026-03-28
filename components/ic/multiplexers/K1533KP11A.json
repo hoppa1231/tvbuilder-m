@@ -25,7 +25,7 @@
 			"index": 15,
 			"direction": "DIRECTION_INPUT",
 			"position": "TOP",
-			"readable_name": "~E",
+			"readable_name": "~CS",
 			"description": "Разрешение",
 			"dependencies": []
 		},{

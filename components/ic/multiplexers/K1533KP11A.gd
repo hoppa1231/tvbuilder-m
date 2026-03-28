@@ -15,7 +15,7 @@ func _process_signal():
 	pin(8).set_low()   	# GND
 	pin(16).set_high()  # VCC
 
-	if pin(15).low:	# ~CS
+	if pin(15).high:	# ~CS
 		_set_all_outputs_low()
 	else:
 		if pin(1).low:
